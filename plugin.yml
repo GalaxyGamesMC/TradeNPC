@@ -1,0 +1,17 @@
+name: TradeNPC
+author: alvin0319
+authors:
+  - DavidGlitch04
+main: TradeNPC\Main
+version: 1.0.0
+api: 4.0.0
+
+commands:
+  npc:
+    description: "TradeNPC Command"
+    permission: tradenpc.command.use
+    
+permissions:
+  tradenpc.command.use:
+    default: op
+    description: "TradeNPC Command Permission"
