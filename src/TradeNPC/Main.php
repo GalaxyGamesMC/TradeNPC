@@ -121,7 +121,7 @@ class Main extends PluginBase implements Listener
 				$sell = TradeDataPool::$editNPCData[$p->getName()]["sell"];
 				$entity->addTradeItem($buya, $buyb, $sell);
 				unset(TradeDataPool::$editNPCData[$p->getName()]);
-				$p->sendMessage("Đã thêm item vào trade!");
+				$p->sendMessage("Added item to trade!");
 				$this->saveall();
         	}
         	$this->fullItem = [];
@@ -161,16 +161,16 @@ class Main extends PluginBase implements Listener
                 }
                 $this->turn = true;
                 $this->name = $player->getName();
-                $player->sendMessage("Nhập Tên NPC");
+                $player->sendMessage("Input name npc to chat");
                # $player->removeCurrentWindow($this->menu->getInventory());
                 return $transaction->discard();
             }
             return $transaction->continue();
 		});
 		$xacnhan = ItemFactory::getInstance()->get(160,7,1);
-		$xacnhan->setCustomName("Xác nhận\nKhi bấm rồi nhập tên NPC");
+		$xacnhan->setCustomName("Confirm\nAfter choose, input name of npc to chat");
 		$thoat = ItemFactory::getInstance()->get(331,0,1);
-		$thoat->setCustomName("Thoát");
+		$thoat->setCustomName("Exit");
 		$inv = $this->menu->getInventory();
 		$inv->setItem(26, $xacnhan);
 		$this->menu->send($p);
@@ -220,7 +220,7 @@ class Main extends PluginBase implements Listener
 				array_shift($args);
 				$name = implode(" ", $args);
 				if (!isset($name)) {
-					$sender->sendMessage("Hãy sử dụng: /npc create (tên)");
+					$sender->sendMessage("Usage: /npc create (name)");
 					break;
 				}
 				$nbt = CompoundTag::create();
@@ -243,15 +243,15 @@ class Main extends PluginBase implements Listener
 				array_shift($args);
 				$name = implode(" ", $args);
 				if (!isset($name)) {
-					$sender->sendMessage("Hãy sử dụng: /npc remove (tên)");
+					$sender->sendMessage("Usage: /npc remove (name)");
 					break;
 				}
 				if (!file_exists($this->getDataFolder() . $name . ".dat")) {
-					$sender->sendMessage("Tên NPC này hiện không tồn tại!");
+					$sender->sendMessage("Npc not found!");
 					break;
 				}
 				unlink($this->getDataFolder() . $name . ".dat");
-				$sender->sendMessage("Đã xóa NPC!");
+				$sender->sendMessage("Deleted NPC!");
 				$this->saveall();
 				foreach ($this->getServer()->getWorldManager()->getWorlds() as $level) {
 					foreach ($level->getEntities() as $entity) {
@@ -266,9 +266,9 @@ class Main extends PluginBase implements Listener
 				break;
 			default:
 				foreach ([
-							 ["/npc create (tên)", "Tạo ra npc trade"],
-							 ["/npc setitem", "Add item vào trade"],
-							 ["/npc remove", "Xóa npc"]
+							 ["/npc create (name)", "Create npc trade"],
+							 ["/npc setitem", "Add item to trade"],
+							 ["/npc remove", "Delete npc"]
 						 ] as $usage) {
 					$sender->sendMessage($usage[0] . " - " . $usage[1]);
 				}
